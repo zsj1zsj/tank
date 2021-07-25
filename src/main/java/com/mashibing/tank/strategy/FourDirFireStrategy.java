@@ -1,9 +1,11 @@
 package com.mashibing.tank.strategy;
 
-import com.mashibing.tank.*;
+import com.mashibing.tank.Bullet;
+import com.mashibing.tank.Tank;
 import com.mashibing.tank.utils.Audio;
 import com.mashibing.tank.utils.Dir;
 import com.mashibing.tank.utils.Group;
+import com.mashibing.tank.*;
 
 public class FourDirFireStrategy implements FireStrategy {
 

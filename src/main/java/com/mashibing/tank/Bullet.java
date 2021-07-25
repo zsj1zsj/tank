@@ -5,9 +5,9 @@ import java.awt.Rectangle;
 
 import com.mashibing.tank.abstractfactory.BaseBullet;
 import com.mashibing.tank.abstractfactory.BaseTank;
+import com.mashibing.tank.utils.ResourceMgr;
 import com.mashibing.tank.utils.Dir;
 import com.mashibing.tank.utils.Group;
-import com.mashibing.tank.utils.ResourceMgr;
 
 public class Bullet extends BaseBullet {
     private static final int SPEED = 6;

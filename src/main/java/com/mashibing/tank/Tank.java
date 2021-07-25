@@ -8,8 +8,15 @@ import com.mashibing.tank.abstractfactory.BaseTank;
 import com.mashibing.tank.strategy.DefaultFireStrategy;
 import com.mashibing.tank.strategy.FireStrategy;
 import com.mashibing.tank.strategy.FourDirFireStrategy;
+import com.mashibing.tank.utils.Dir;
+import com.mashibing.tank.utils.Group;
+import com.mashibing.tank.utils.ResourceMgr;
 import com.mashibing.tank.utils.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 public class Tank extends BaseTank {
 
 
@@ -23,10 +30,10 @@ public class Tank extends BaseTank {
 
     public int x, y;
 
-    public Dir dir = Dir.DOWN;
+    public Dir dir;
 
     private boolean moving = true;
-    public TankFrame tf = null;
+    public TankFrame tf;
     private boolean living = true;
 
 
@@ -39,6 +46,8 @@ public class Tank extends BaseTank {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+
+        this.rect = new Rectangle();
 
         rect.x = this.x;
         rect.y = this.y;
@@ -61,67 +70,16 @@ public class Tank extends BaseTank {
         return dir;
     }
 
-    public int getX() {
-        return x;
-    }
-
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public boolean isMoving() {
-        return moving;
-    }
-
-    private void move() {
-
-        if (!moving) return;
-
-        switch (dir) {
-            case LEFT:
-                x -= SPEED;
-                break;
-            case UP:
-                y -= SPEED;
-                break;
-            case RIGHT:
-                x += SPEED;
-                break;
-            case DOWN:
-                y += SPEED;
-                break;
-        }
-
-        if (this.group == Group.BAD && random.nextInt(100) > 95)
-            this.fire();
-
-        if (this.group == Group.BAD && random.nextInt(100) > 95)
-            randomDir();
-
-        boundsCheck();
-        //update rect
-        rect.x = this.x;
-        rect.y = this.y;
-
-    }
-
-    private void boundsCheck() {
+    @Override
+    public void boundsCheck() {
         if (this.x < 2) x = 2;
         if (this.y < 28) y = 28;
         if (this.x > TankFrame.GAME_WIDTH - Tank.WIDTH - 2) x = TankFrame.GAME_WIDTH - Tank.WIDTH - 2;
         if (this.y > TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2) y = TankFrame.GAME_HEIGHT - Tank.HEIGHT - 2;
     }
 
-    private void randomDir() {
+    @Override
+    public void randomDir() {
 
         this.dir = Dir.values()[random.nextInt(4)];
     }
@@ -147,23 +105,6 @@ public class Tank extends BaseTank {
 
         move();
 
-    }
-
-
-    public void setDir(Dir dir) {
-        this.dir = dir;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public void die() {

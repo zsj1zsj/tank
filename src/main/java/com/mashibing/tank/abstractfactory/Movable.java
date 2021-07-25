@@ -14,7 +14,7 @@ public interface Movable {
 
     Dir getDir();
 
-    boolean getMoving();
+    boolean isMoving();
     int getSPEED();
 
     Group getGroup();
@@ -30,7 +30,7 @@ public interface Movable {
 
 
     default void move(){
-        if (!getMoving())
+        if (!isMoving())
             return;
 
         switch (getDir()) {

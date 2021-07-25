@@ -14,7 +14,6 @@ import java.util.Random;
 
 public class RectTank extends BaseTank {
 
-	private static final int SPEED = 2;
 	public static int WIDTH = ResourceMgr.goodTankU.getWidth();
 
 	public static int HEIGHT = ResourceMgr.goodTankU.getHeight();
@@ -69,64 +68,8 @@ public class RectTank extends BaseTank {
 			new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
 	}
 
-	public Dir getDir() {
-		return dir;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group group) {
-		this.group = group;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public boolean isMoving() {
-		return moving;
-	}
-
-	private void move() {
-
-		if (!moving)
-			return;
-
-		switch (dir) {
-		case LEFT:
-			x -= SPEED;
-			break;
-		case UP:
-			y -= SPEED;
-			break;
-		case RIGHT:
-			x += SPEED;
-			break;
-		case DOWN:
-			y += SPEED;
-			break;
-		}
-
-		if (this.group == Group.BAD && random.nextInt(100) > 95)
-			this.fire();
-
-		if (this.group == Group.BAD && random.nextInt(100) > 95)
-			randomDir();
-
-		boundsCheck();
-		// update rect
-		rect.x = this.x;
-		rect.y = this.y;
-
-	}
-
-	private void boundsCheck() {
+	@Override
+	public void boundsCheck() {
 		if (this.x < 2)
 			x = 2;
 		if (this.y < 28)
@@ -137,7 +80,8 @@ public class RectTank extends BaseTank {
 			y = TankFrame.GAME_HEIGHT - RectTank.HEIGHT - 2;
 	}
 
-	private void randomDir() {
+	@Override
+	public void randomDir() {
 
 		this.dir = Dir.values()[random.nextInt(4)];
 	}
@@ -152,22 +96,6 @@ public class RectTank extends BaseTank {
 		g.setColor(c);
 		move();
 
-	}
-
-	public void setDir(Dir dir) {
-		this.dir = dir;
-	}
-
-	public void setMoving(boolean moving) {
-		this.moving = moving;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public void setY(int y) {
-		this.y = y;
 	}
 
 	public void die() {
